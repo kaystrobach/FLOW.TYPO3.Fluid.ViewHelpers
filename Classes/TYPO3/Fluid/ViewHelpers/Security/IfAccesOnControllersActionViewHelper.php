@@ -11,7 +11,7 @@ namespace TYPO3\Fluid\ViewHelpers\Security;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-
+use TYPO3\Flow\Annotations as Flow;
 use		TYPO3\Flow\Security\Authorization\AccessDecisionManagerInterface,
 		TYPO3\Flow\Security\Exception\AccessDeniedException,
 		TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper,
