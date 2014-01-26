@@ -2,6 +2,7 @@
 namespace TYPO3\Fluid\ViewHelpers\Security;
 
 use TYPO3\Flow\Aop\JoinPoint;
+use TYPO3\Flow\Annotations as Flow;
 
 
 /*                                                                        *
@@ -34,7 +35,7 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	/**
 	 * Injects the access decision manager
 	 *
-	 * @Flow/Inject
+	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Security\Authorization\AccessDecisionManagerInterface
 	 */
 	protected $accessDecisionManager;
@@ -56,6 +57,12 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
+
+	/**
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Mvc\Routing\RouterInterface
+	 */
+	protected $router;
 
 	/**
 	 * initializes the needed properties of this viewHelper
@@ -102,8 +109,7 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	 * @return boolean TRUE if we currently have access to the given resource
 	 */
 	protected function hasAccessToResource($packageKey, $subpackageKey, $controllerName, $actionName) {
-		$namespace = $this->packageManager->getPackage($packageKey)->getNamespace();
-		$className = $namespace . '\\Controller\\' . $controllerName . 'Controller';
+		$className = $this->router->getControllerObjectName($packageKey, $subpackageKey, $controllerName);
 		try {
 			$this->accessDecisionVoterManager->decideOnJoinPoint(
 				new JoinPoint(
