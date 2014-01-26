@@ -1,6 +1,9 @@
 <?php
 namespace TYPO3\Fluid\ViewHelpers\Security;
 
+use TYPO3\Flow\Aop\JoinPoint;
+
+
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Fluid".                 *
  *                                                                        *
@@ -27,6 +30,7 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	 * @var \TYPO3\Flow\Mvc\ActionRequest
 	 */
 	protected $request;
+
 	/**
 	 * Injects the access decision manager
 	 *
@@ -37,10 +41,19 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 
 	/**
 	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Security\Authorization\AccessDecisionVoterManager
+	 */
+	protected $accessDecisionVoterManager;
+
+	/**
+	 * @Flow\Inject
 	 * @var \TYPO3\Flow\Package\PackageManagerInterface
 	 */
 	protected $packageManager;
 
+	/**
+	 * initializes the needed properties of this viewHelper
+	 */
 	public function initialize() {
 		parent::initialize();
 		$this->request = $this->controllerContext->getRequest();
