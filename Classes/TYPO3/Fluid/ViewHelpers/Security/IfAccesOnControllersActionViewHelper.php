@@ -89,21 +89,21 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	/**
 	 * Check if we currently have access to the given resource
 	 *
-	 * @param $package
-	 * @param $subpackage
-	 * @param $controller
-	 * @param $action
+	 * @param $packageName
+	 * @param $subpackageName
+	 * @param $controllerName
+	 * @param $actionName
 	 * @return boolean TRUE if we currently have access to the given resource
 	 */
-	protected function hasAccessToResource($package, $subpackage, $controller, $action) {
-		$namespace = $this->packageManager->getPackage($package)->getNamespace();
-		$className = $namespace . '\\Controller\\' . $controller . 'Controller';
+	protected function hasAccessToResource($packageName, $subpackageName, $controllerName, $actionName) {
+		$namespace = $this->packageManager->getPackage($packageName)->getNamespace();
+		$className = $namespace . '\\Controller\\' . $controllerName . 'Controller';
 		try {
 			$this->accessDecisionVoterManager->decideOnJoinPoint(
 				new JoinPoint(
 					$this->objectManager->get($className),
 					$className,
-					$action,
+					$actionName,
 					array()
 				)
 			);
