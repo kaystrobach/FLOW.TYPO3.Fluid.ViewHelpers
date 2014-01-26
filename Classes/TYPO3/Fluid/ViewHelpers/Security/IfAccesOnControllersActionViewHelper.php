@@ -52,6 +52,12 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	protected $packageManager;
 
 	/**
+	 * @Flow\Inject
+	 * @var \TYPO3\Flow\Object\ObjectManagerInterface
+	 */
+	protected $objectManager;
+
+	/**
 	 * initializes the needed properties of this viewHelper
 	 */
 	public function initialize() {
