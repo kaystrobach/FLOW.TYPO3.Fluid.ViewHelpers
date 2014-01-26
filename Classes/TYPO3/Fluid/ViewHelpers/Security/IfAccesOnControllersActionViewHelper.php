@@ -24,6 +24,10 @@ namespace TYPO3\Fluid\ViewHelpers\Security;
 class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
 
 	/**
+	 * @var \TYPO3\Flow\Mvc\ActionRequest
+	 */
+	protected $request;
+	/**
 	 * Injects the access decision manager
 	 *
 	 * @Flow/Inject
@@ -37,6 +41,10 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	 */
 	protected $packageManager;
 
+	public function initialize() {
+		parent::initialize();
+		$this->request = $this->controllerContext->getRequest();
+	}
 	/**
 	 * renders <f:then> child if access to the given resource is allowed, otherwise renders <f:else> child.
 	 *
@@ -50,13 +58,13 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	 */
 	public function render($action, $package = NULL, $subpackage = NULL, $controller = NULL) {
 		if($package === NULL) {
-			$package = $this->controllerContext->getRequest()->getControllerPackageKey();
+			$package = $this->request->getControllerPackageKey();
 		}
 		if(($package === NULL) && ($subpackage === NULL)) {
-			$subpackage = $this->controllerContext->getRequest()->getControllerSubpackageKey();
+			$subpackage = $this->request->getControllerSubpackageKey();
 		}
 		if($controller === NULL) {
-			$controller = $this->controllerContext->getRequest()->getControllerName();
+			$controller = $this->request->getControllerName();
 		}
 		if ($this->hasAccessToResource($package, $subpackage, $controller, $action)) {
 			return $this->renderThenChild();
