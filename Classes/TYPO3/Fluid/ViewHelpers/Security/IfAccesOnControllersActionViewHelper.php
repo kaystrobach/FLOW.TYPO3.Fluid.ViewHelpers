@@ -48,15 +48,15 @@ class IfAccesOnControllersActionViewHelper extends \TYPO3\Fluid\Core\ViewHelper\
 	 * @return string the rendered string
 	 * @api
 	 */
-	public function render($package = NULL, $subpackage = NULL, $controller = NULL, $action) {
+	public function render($action, $package = NULL, $subpackage = NULL, $controller = NULL) {
 		if($package === NULL) {
-			$package = $this->controllerContext->getUriBuilder()->getRequest()->getControllerPackageKey();
+			$package = $this->controllerContext->getRequest()->getControllerPackageKey();
 		}
 		if(($package === NULL) && ($subpackage === NULL)) {
-			$subpackage = $this->controllerContext->getUriBuilder()->getRequest()->getControllerSubpackageKey();
+			$subpackage = $this->controllerContext->getRequest()->getControllerSubpackageKey();
 		}
 		if($controller === NULL) {
-			$controller = $this->controllerContext->getUriBuilder()->getRequest()->getControllerName();
+			$controller = $this->controllerContext->getRequest()->getControllerName();
 		}
 		if ($this->hasAccessToResource($package, $subpackage, $controller, $action)) {
 			return $this->renderThenChild();
